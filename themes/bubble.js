@@ -3,6 +3,7 @@ import Emitter from '../core/emitter';
 import BaseTheme, { BaseTooltip } from './base';
 import { Range } from '../core/selection';
 import icons from '../ui/icons';
+import cspStyleManager from '../core/csp-utils';
 
 
 const TOOLBAR_CONFIG = [
@@ -51,9 +52,9 @@ class BubbleTooltip extends BaseTooltip {
       if (range != null && range.length > 0 && source === Emitter.sources.USER) {
         this.show();
         // Lock our width so we will expand beyond our offsetParent boundaries
-        this.root.style.left = '0px';
-        this.root.style.width = '';
-        this.root.style.width = this.root.offsetWidth + 'px';
+        cspStyleManager.setPosition(this.root, 0, 0);
+        cspStyleManager.setDisplay(this.root, '');
+        cspStyleManager.setWidth(this.root, this.root.offsetWidth);
         let lines = this.quill.getLines(range.index, range.length);
         if (lines.length === 1) {
           this.position(this.quill.getBounds(range));
@@ -94,9 +95,9 @@ class BubbleTooltip extends BaseTooltip {
   position(reference) {
     let shift = super.position(reference);
     let arrow = this.root.querySelector('.ql-tooltip-arrow');
-    arrow.style.marginLeft = '';
+    cspStyleManager.setMargin(arrow, 'Left', '');
     if (shift === 0) return shift;
-    arrow.style.marginLeft = (-1*shift - arrow.offsetWidth/2) + 'px';
+    cspStyleManager.setMargin(arrow, 'Left', -1*shift - arrow.offsetWidth/2);
   }
 }
 BubbleTooltip.TEMPLATE = [

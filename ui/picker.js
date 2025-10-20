@@ -1,5 +1,6 @@
 import Keyboard from '../modules/keyboard';
 import DropdownIcon from '../assets/icons/dropdown.svg';
+import cspStyleManager from '../core/csp-utils';
 
 let optionsCounter = 0;
 
@@ -12,7 +13,7 @@ class Picker {
     this.select = select;
     this.container = document.createElement('span');
     this.buildPicker();
-    this.select.style.display = 'none';
+    cspStyleManager.setDisplay(this.select, 'none');
     this.select.parentNode.insertBefore(this.container, this.select);
 
     this.label.addEventListener('mousedown', () => {

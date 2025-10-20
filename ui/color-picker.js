@@ -1,4 +1,5 @@
 import Picker from './picker';
+import cspStyleManager from '../core/csp-utils';
 
 
 class ColorPicker extends Picker {
@@ -13,7 +14,7 @@ class ColorPicker extends Picker {
 
   buildItem(option) {
     let item = super.buildItem(option);
-    item.style.backgroundColor = option.getAttribute('value') || '';
+    cspStyleManager.setBackgroundColor(item, option.getAttribute('value') || '');
     return item;
   }
 
@@ -23,9 +24,9 @@ class ColorPicker extends Picker {
     let value = item ? item.getAttribute('data-value') || '' : '';
     if (colorLabel) {
       if (colorLabel.tagName === 'line') {
-        colorLabel.style.stroke = value;
+        cspStyleManager.setSVGStyle(colorLabel, 'stroke', value);
       } else {
-        colorLabel.style.fill = value;
+        cspStyleManager.setSVGStyle(colorLabel, 'fill', value);
       }
     }
   }

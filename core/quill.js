@@ -97,7 +97,8 @@ class Quill {
         return this.editor.update(null, mutations, index);
       }, source);
     });
-    let contents = this.clipboard.convert(`<div class='ql-editor' style="white-space: normal;">${html}<p><br></p></div>`);
+    // CSP-safe HTML creation - avoid inline styles
+    let contents = this.clipboard.convert(`<div class='ql-editor ql-white-space-normal'>${html}<p><br></p></div>`);
     this.setContents(contents);
     this.history.clear();
     if (this.options.placeholder) {
